@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa Người Dùng</title>
+</head>
+<body>
+<h2>Chỉnh Sửa Người Dùng</h2>
+<form th:action="@{/users/update}" method="post" th:object="${user}">
+    <input type="hidden" th:field="*{id}"/>
+    <label>Tên:</label>
+    <input type="text" th:field="*{name}" required/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/>
+    <button type="submit">Cập Nhật</button>
+</form>
+<br>
+<a href="/users">Quay lại</a>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Người Dùng</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>Danh Sách Người Dùng</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Email</th>
+        <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.email}"></td>
+        <td>
+            <a th:href="@{/users/edit/{id}(id=${user.id})}">Sửa</a>
+            |
+            <a th:href="@{/users/delete/{id}(id=${user.id})}"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Thêm Người Dùng</h2>
+<form th:action="@{/users/add}" method="post" th:object="${newUser}">
+    <label>Tên:</label>
+    <input type="text" th:field="*{name}" required/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/>
+    <button type="submit">Thêm</button>
+</form>
+</body>
+</html>
