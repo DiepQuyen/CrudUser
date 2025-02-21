@@ -1,8 +1,11 @@
 package org.example.themsuaxoauser.Service;
 
+import org.example.themsuaxoauser.Model.Post;
 import org.example.themsuaxoauser.Model.User;
+import org.example.themsuaxoauser.Repository.PostRepository;
 import org.example.themsuaxoauser.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,9 +14,19 @@ import java.util.List;
 public class UserService {
     //sử dụng UserRepository để thao tác với dữ liệu
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
+    }
+
+    //tạo post cho user
+    @Transactional//đảm bảo rằng tất cả các thao tác trong method này sẽ được thực thi hoặc rollback nếu có lỗi
+    public Post createPostForUser(Long userId, Post post) {
+        User user = getUserById(userId);
+        post.setUser(user);
+        return postRepository.save(post);
     }
 
     //lấy all dữ liệu

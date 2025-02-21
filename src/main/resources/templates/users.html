@@ -42,6 +42,8 @@
             |
             <a th:href="@{/users/delete/{id}(id=${user.id})}"
                onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+            |
+            <a th:href="@{/users/{id}/posts(id=${user.id})}">Xem hoặc tạo bài viết</a>
         </td>
     </tr>
     </tbody>

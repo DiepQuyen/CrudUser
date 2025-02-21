@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Bài Viết</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>Danh Sách Bài Viết của <span th:text="${user.name}"></span></h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tiêu Đề</th>
+        <th>Nội Dung</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="post : ${user.posts}">
+        <td th:text="${post.id}"></td>
+        <td th:text="${post.title}"></td>
+        <td th:text="${post.content}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Thêm Bài Viết</h2>
+<form th:action="@{/users/{userId}/posts/add(userId=${user.id})}" method="post" th:object="${newPost}">
+    <label>Tiêu Đề:</label>
+    <input type="text" th:field="*{title}" required/>
+    <label>Nội Dung:</label>
+    <input type="text" th:field="*{content}" required/>
+    <button type="submit">Thêm</button>
+</form>
+<br>
+<a th:href="@{/users}">Quay lại</a>
+</body>
+</html>

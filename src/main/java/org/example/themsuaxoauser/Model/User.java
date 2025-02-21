@@ -2,16 +2,20 @@ package org.example.themsuaxoauser.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 //model dữ liệu
 @Entity
 @Table(name = "users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id// primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// giá trị tự tăng dần
     private Long id;
 
     private String name;
     private String email;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
 
     public User() {
     }
@@ -19,6 +23,14 @@ public class User {
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public Long getId() {

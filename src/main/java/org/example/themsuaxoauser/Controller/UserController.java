@@ -1,5 +1,6 @@
 package org.example.themsuaxoauser.Controller;
 
+import org.example.themsuaxoauser.Model.Post;
 import org.example.themsuaxoauser.Model.User;
 import org.example.themsuaxoauser.Service.UserService;
 import org.springframework.stereotype.Controller;
@@ -51,5 +52,19 @@ public class UserController {
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return "redirect:/users";
+    }
+
+    @GetMapping("/{userId}/posts")
+    public String listPosts(@PathVariable Long userId, Model model) {
+        User user = userService.getUserById(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("newPost", new Post());
+        return "posts";
+    }
+
+    @PostMapping("/{userId}/posts/add")
+    public String addPost(@PathVariable Long userId, @ModelAttribute("newPost") Post post) {
+        userService.createPostForUser(userId, post);
+        return "redirect:/users/" + userId + "/posts";
     }
 }
